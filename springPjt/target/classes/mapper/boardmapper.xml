@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- mapper는 클래스 패키지와 유사한 용도로, 원하는 sql문을 찾을 수 있는 namespace에 신경을 많이 써야 한다.
+  	mapper는 root-context.xml에서 인식하도록 스프링에서 등록이 되어있다. -->
+  	
+  	<mapper namespace="org.cyeon.mapper.BoardMapper">
+  	
+  	<!--BoardMapper.xml 의 각 sql id값은 BoardDAO와 동일하게 하는것이 좋다. -->
+  	<!-- mybatis는 기본적으로 preparedStatement를 이용해서 처리하기 때문에 #{파라미터값} 을 사용한다. -->
+  
+  	<insert id="insert">
+  		insert into tbl_board(title,content,writer)
+  		values(#{title},#{content},#{writer})
+  	</insert>
+  	
+  	<select id="read" resultType="BoardVO">
+  		select bno,title,content,writer,regdate,viewcnt
+  		from tbl_board where bno=#{bno}
+  	</select>
+  	
+  	<update id="update">
+  		update tbl_board set title=#{title},content=#{content}
+  		where bno=#{bno}
+  	
+  	</update>
+  	
+  	<delete id="delete">
+  		delete from tbl_board where bno=#{bno}
+  	
+  	</delete>
+  	
+  	<select id="list" resultType="org.cyeon.domain.BoardVO">
+  		<![CDATA[select bno,title,content,writer,regdate,viewcnt
+  				from tbl_board where bno>0
+  				order by bnp desc, regdate desc]]>
+  	</select>
+  	
+  	
+  	</mapper>
